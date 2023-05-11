@@ -1,8 +1,8 @@
 clear
 echo
 
-javac MiniExercises/Main.java
-java MiniExercises/Main
+javac Animal/Main.java
+java Animal/Main
 
 # rm *.class
 # find . -name "*.class" -type f

@@ -1,5 +1,10 @@
 package MiniExercises.models;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 /**
  * Define a class that holds information about a mobile phone device:
  * model,
@@ -19,6 +24,7 @@ public class GSM {
     private String owner;
     private Battery batteryAccessory;
     private Display displayAccessory;
+    private List<Call> callHistory;
 
     public GSM(String model, String manufacturer) {
         this.model = model;
@@ -85,6 +91,41 @@ public class GSM {
 
     public void setDisplayAccessory(Display displayAccessory) {
         this.displayAccessory = displayAccessory;
+    }
+
+    public List<Call> getCallHistory() {
+        return callHistory;
+    }
+
+    public void setCallHistory(List<Call> callHistory) {
+        this.callHistory = callHistory;
+    }
+
+    public boolean addCall(Call call) {
+        if (call == null) {
+            return false;
+        }
+        if (this.callHistory == null) {
+            this.callHistory = new ArrayList<Call>();
+        }
+        return this.callHistory.add(call);
+    }
+
+    public boolean deleteCall(Call call) {
+        if (call == null) {
+            return false;
+        }
+        return this.callHistory.remove(call);
+    }
+
+    public void clearCallHistory() {
+        this.callHistory.clear();
+    }
+
+    public Double calculateTotalPrice(double pricePerMin) {
+        Integer total = this.callHistory.stream().map(item -> item.getDuration()).reduce(0,
+                (prev, current) -> prev + current);
+        return Double.valueOf(total / 60) * pricePerMin;
     }
 
     @Override
